@@ -11,3 +11,51 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  */
+metadata {
+
+    definition (name: "Simulated Open&Switch Device", namespace: "jamliu", author: "jamliu") {
+        capability "Door Control"
+        capability "Switch"
+        capability "Contact Sensor"	  
+        capability "Sensor"        
+        capability "Actuator"                  		
+    }
+    
+    simulator {
+		status "open": "contact:open"
+		status "closed": "contact:closed"
+    status "on":"switch:on"
+    status "off":"switch:off"
+	}
+
+    tiles {
+        standardTile("switch", "device.switch", width: 2, height: 2, canChangeIcon: true) {
+            state "off", label: '${currentValue}', action: "switch.on", icon: "st.switches.switch.off", backgroundColor: "#ffffff"
+            state "on", label: '${currentValue}', action: "switch.off", icon: "st.switches.switch.on", backgroundColor: "#00A0DC"
+        }
+        standardTile("open", "device.door", inactiveLabel: false, decoration: "flat") {
+            state "default", label:'open', action:"door control.open", icon:"st.doors.garage.garage-opening"
+        }
+        standardTile("close", "device.door", inactiveLabel: false, decoration: "flat") {
+            state "default", label:'close', action:"door control.close", icon:"st.doors.garage.garage-closing"
+        }
+        main "switch"
+        details(["switch"])
+    }
+}
+
+def parse(description) {
+}
+
+def on() {
+    sendEvent(name: "switch", value: "on") 
+}
+def off() {
+    sendEvent(name: "switch", value: "off")    
+}
+def open(){
+   sendEvent(name: "contact", value: "open")
+}
+def close(){
+   sendEvent(name: "contact", value: "closed")
+}
