@@ -40,7 +40,7 @@ metadata {
             state "default", label:'close', action:"door control.close", icon:"st.doors.garage.garage-closing"
         }
         main "switch"
-        details(["switch"])
+        details(["switch","open","close"])
     }
 }
 
